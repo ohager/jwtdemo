@@ -1,0 +1,13 @@
+body{
+    margin-top: 2em;
+}
+
+form.form-signin{
+    padding: 20px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+input.field {
+    margin: 10px 0;
+}

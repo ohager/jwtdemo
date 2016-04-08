@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    div.container.container--small
+        form.form-signin(action="/login", method="post")
+            h2.heading.heading--medium Please sign in
+            input.field(type="text", name="username", placeholder="Email address")
+            input.field(type="password", name="password", placeholder="Password")
+            button.button.button--block.button--secondary(type="submit") Sign in
