@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
+=======
+>>>>>>> a2db2cdada8c1248ce8f5cd32f518110bf1dc12f
 # Logs
 logs
 *.log
@@ -28,4 +31,3 @@ build/Release
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
-
