@@ -11,3 +11,7 @@ form.form-signin{
 input.field {
     margin: 10px 0;
 }
+
+.light{
+    color: #bbb;
+}
