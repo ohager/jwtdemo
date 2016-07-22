@@ -1,0 +1,18 @@
+div#modal-container(style="display:none")
+    div.overlay
+    div.modal
+        header.modal__header
+            button(type="button" onclick="closeModal()").button.button--close ×
+        h3.heading.heading--small Title
+        div.modal__body Content
+        footer.modal__footer
+script.
+    function closeModal(){
+        document.getElementById('modal-container').style.display = 'none';
+    }
+    function showModal(titleText, contentDOM, okCallback, cancelCallback){
+        var container = document.getElementById('modal-container');
+        container.style.display = 'block'; // show
+
+        container.getElementsByTagName('h3')[0].textContent = titleText;
+    }

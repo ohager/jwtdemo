@@ -1,3 +1,6 @@
+var uuid = require('node-uuid');
+var _ = require('lodash');
+
 var users = [
 	{
 		id : 1,
@@ -17,30 +20,19 @@ var users = [
 ];
 
 function __findByName(name){
-
-	for(var i=0; i < users.length; ++i){
-		var user = users[i];
-		if(user.name === name){
-			return user;
-
-		}
-	}
-
-	return null;
+	return _.find(users, {name: name});
 }
 
 module.exports = {
 	findByName: function(name){
 		var user = __findByName(name);
-		return !user ? null : {
-			id : user.id,
-			name: user.name
-		};
+		if(!user) return null;
+		delete user.pass;
+		return user;
 	},
 	login : function(username, password){
 		var user = __findByName(username);
-		if(!user) return undefined;
-
-		return user.pass === password ? user : undefined;
+		if(!user) return null;
+		return user.pass === password ? user : null;
 	}
 };

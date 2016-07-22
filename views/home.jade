@@ -5,6 +5,21 @@ block content
       div.card
           div.card__content
               p.paragraph Welcome, #{user}
-
+                  button.button.button--ghost.button--xsmall(onclick="jwtd.logout()" style="float:right") Logout
+                  button.button.button--ghost.button--xsmall(onclick="jwtd.refresh()" style="float:right") Refresh
       img.image(src="./images/jwt.png")
+      div.card__content.c-card__content--divider
+          | Your session expires in &nbsp;
+          span#expiry-counter ...
+          | &nbsp;seconds
 
+block scripts
+    script.
+
+        (function(){
+            window.Cookies = new Cookies();
+            var jwtTokenValue = jwt_decode(window.Cookies.get('jwt'));
+            var expiresIn = jwtd.calcExpiresIn(jwtTokenValue.exp);
+            var target = document.getElementById('expiry-counter');
+            jwtd.countdown(expiresIn, target);
+        })()

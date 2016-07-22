@@ -1,11 +1,28 @@
 var express = require('express');
-var jwt = require('jsonwebtoken');
 var userRepo = require('../repos/user-repo');
+var auth = require('../scripts/auth');
+
 var router = express.Router();
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	res.clearCookie(auth.JwtCookieName);
 	res.render('login', { title: 'Express' });
+});
+
+router.get('/refresh', function(req, res, next){
+
+	var jwtToken = req.cookies[auth.JwtCookieName];
+	var payload = auth.getJwtPayload(jwtToken);
+
+	if(auth.isValidRefreshId(payload.refresh_id)){
+		var token = auth.createJwt(payload);
+		res.cookie(auth.JwtCookieName, token, {httpOnly : false});
+		res.redirect(req.query.returnUrl);
+		return;
+	}
+	res.redirect('/login');
 });
 
 router.post('/', function(req, res, next){
@@ -18,17 +35,16 @@ router.post('/', function(req, res, next){
 		return
 	}
 
+	// will be our jwt-payload
 	var authorizedUser = {
 		name: user.name,
-		id : user.id
+		id : user.id,
+		refresh_id : auth.createRefreshId()
 	};
 
-	var token = jwt.sign(authorizedUser, 'secret', {
-		expiresIn: 8 * 60 * 60 // 8 hours
-	});
-
-	res.cookie('jwt', token, {httpOnly : true});
-	res.redirect('/home');
+	var token = auth.createJwt(authorizedUser);
+	res.cookie(auth.JwtCookieName, token, {httpOnly : false});
+	res.redirect('/');
 
 });
 
